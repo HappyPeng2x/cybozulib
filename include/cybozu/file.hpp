@@ -308,7 +308,11 @@ public:
 			posMode = FILE_END;
 			break;
 		default:
+#ifdef _MSC_VER
 			__assume(0);
+#else // gcc or clang
+			__builtin_unreachable();
+#endif
 		}
 		bool isOK = SetFilePointerEx(hdl_, largePos, NULL, posMode) != 0;
 #else
